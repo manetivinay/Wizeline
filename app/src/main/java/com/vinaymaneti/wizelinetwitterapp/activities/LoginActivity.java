@@ -8,17 +8,21 @@ import android.widget.Button;
 
 import com.vinaymaneti.wizelinetwitterapp.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.btnLogin)
     Button mLoginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
-        mLoginBtn = (Button) findViewById(R.id.btnLogin);
+//        mLoginBtn = (Button) findViewById(R.id.btnLogin);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

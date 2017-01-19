@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.vinaymaneti.wizelinetwitterapp.Model.Timeline;
 import com.vinaymaneti.wizelinetwitterapp.Model.User;
 import com.vinaymaneti.wizelinetwitterapp.R;
-import com.vinaymaneti.wizelinetwitterapp.Utils.DividerItemDecoration;
 import com.vinaymaneti.wizelinetwitterapp.Utils.RetrofitUtils;
 import com.vinaymaneti.wizelinetwitterapp.adapter.TweetArrayAdapter;
 import com.vinaymaneti.wizelinetwitterapp.listener.TimelineApi;
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private TimelineApi mTimelineApi;
     private TweetArrayAdapter mTweetArrayAdapter;
     private List<Timeline> timelineList = new ArrayList<>();
+    String userDespStr, userNameStr, userScreenNameStr = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +63,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response != null) {
                     Log.d("reponse", response.body().toString());
-                    String userDesp = response.body().getDescription();
-                    String userName = response.body().getName();
-                    String userScreenName = response.body().getScreenName();
+                    userDespStr = response.body().getDescription();
+                    userNameStr = response.body().getName();
+                    userScreenNameStr = response.body().getScreenName();
                 }
-
             }
 
             @Override
@@ -75,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Failure", t.getMessage().toString());
             }
         });
+
+        if (userDesp != null || userName != null || userScreenNameStr != null) {
+            userName.setText(userNameStr);
+            userDesp.setText(userDespStr);
+        }
 
         mTimelineApi = RetrofitUtils.get().create(TimelineApi.class);
         mTimelineApi.getTimelineDetails().enqueue(new Callback<List<Timeline>>() {
@@ -85,10 +89,9 @@ public class MainActivity extends AppCompatActivity {
                     timelineList = response.body();
                     mTweetArrayAdapter = new TweetArrayAdapter(MainActivity.this, timelineList);
                     mRecyclerView.setAdapter(mTweetArrayAdapter);
-                    RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL_LIST);
-                    mRecyclerView.addItemDecoration(itemDecoration);
                     //set the layout type for the recycler view
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
                 }
             }
 

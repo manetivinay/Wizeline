@@ -62,11 +62,11 @@ public class TweetArrayAdapter extends RecyclerView.Adapter<TweetArrayAdapter.Tw
                 if (buttonClickPosition == 0) {
                     holder.likeIv.setImageResource(R.drawable.ic_like_enabled);
                     buttonClickPosition = 1;
-                    holder.likeCount.setText(String.valueOf(Integer.parseInt(tweet.getFavouritesCount()) + 1));
+//                    holder.likeCount.setText(String.valueOf(Integer.parseInt(tweet.getFavouritesCount()) + 1));
                 } else {
                     holder.likeIv.setImageResource(R.drawable.ic_like);
                     buttonClickPosition = 0;
-                    holder.likeCount.setText(String.valueOf(Integer.parseInt(tweet.getFavouritesCount())));
+                   // holder.likeCount.setText(String.valueOf(Integer.parseInt(tweet.getFavouritesCount())));
                 }
             }
         });
